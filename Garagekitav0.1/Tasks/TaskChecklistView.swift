@@ -16,6 +16,7 @@ struct TaskChecklistView: View {
     let serviceType: String
     let vehicleName: String
     let daysLeft: Int
+    let dueDate: String
     
     
     //Ia menyimpan status sama ada task sudah selesai atau belum.
@@ -27,10 +28,10 @@ struct TaskChecklistView: View {
        
         
         
-        HStack {
+        HStack  {
             
             
-            
+            /*
             //Image(systemName: "circle")
             //button
             Button {
@@ -47,21 +48,39 @@ struct TaskChecklistView: View {
                 .font(.title2)
                 
             }
-            
-            
-            
+            */
             
             
               //leading rapat ke tepi
             //vstack kirikanan
-            VStack(alignment: .leading) {
-                Text(serviceType)
-                    .font(.headline)
+            HStack {
+                //icon tepi
+                Image(systemName: "tire")
+                    .font(.title)
+                    .foregroundStyle(.white)
+                    .frame(width: 50, height: 50)
+                    .background(Color.orange)
+                    .clipShape(Circle())
+              
                 
-                Text(vehicleName)
-                    .font(.caption)
                 
                 
+                //title
+                VStack(alignment: .leading) {
+                    Text(serviceType)
+                        .font(.headline)
+                    
+                    Text(vehicleName)
+                        .font(.caption)
+                    
+                    Text("DUE")
+                        .font(.caption)
+                    
+                    Text(dueDate)
+                        .font(.caption)
+                    
+                    
+                }
             }
             
             Spacer()
@@ -72,10 +91,21 @@ struct TaskChecklistView: View {
                         .foregroundStyle(.orange)
             
             
-        } .padding()
-    
+        }
+        .padding()
+        //.frame(width: 10)
+        //.background(Color.white)
+        //.clipShape(RoundedRectangle(cornerRadius: 12))
+        .background(Color(.systemGray6))
+        .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 30)
+                .stroke(Color.gray.opacity(0.3), lineWidth: 2)
+        )
+        
         
     }
+    
 }
 
 #Preview {
@@ -84,7 +114,8 @@ struct TaskChecklistView: View {
         
                 serviceType: "Preview Vehicle",
                 vehicleName: "Preview Vehicle",
-                daysLeft: 5
+                daysLeft: 5,
+                dueDate: "26 September 2023"
                 
             
         
