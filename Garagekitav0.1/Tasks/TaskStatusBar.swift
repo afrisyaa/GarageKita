@@ -64,7 +64,7 @@ struct TaskStatusBar: View {
         .pickerStyle(.segmented)
         .tint(.blue)
         .frame(maxWidth: .infinity)
-        .frame(height: 2)
+        .frame(height: 32)
         .padding(.horizontal, 1)
         .padding(.vertical, 8) //jarak task
         //.background(Color.white)

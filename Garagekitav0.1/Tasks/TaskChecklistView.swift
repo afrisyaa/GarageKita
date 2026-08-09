@@ -10,25 +10,29 @@ import SwiftUI
 
 
 
+
 struct TaskChecklistView: View {
     
-    //parameter
+   
     let serviceType: String
     let vehicleName: String
     let daysLeft: Int
     let dueDate: String
-    
+    let mileage: String
+    let iconName: String
+    var status: String
+    let onStatusChange: (String) -> Void
     
     //Ia menyimpan status sama ada task sudah selesai atau belum.
     @State private var isCompleted = false
     
+    @State private var removeTask = false
+    
     var body: some View {
         
         
-       
         
-        
-        HStack  {
+        HStack {
             
             
             /*
@@ -53,12 +57,12 @@ struct TaskChecklistView: View {
             
               //leading rapat ke tepi
             //vstack kirikanan
-            HStack {
+            HStack (spacing: 5){
                 //icon tepi
-                Image(systemName: "tire")
-                    .font(.title)
+                Image(systemName: iconName)
+                    .font(.headline)
                     .foregroundStyle(.white)
-                    .frame(width: 50, height: 50)
+                    .frame(width: 44, height: 44)
                     .background(Color.orange)
                     .clipShape(Circle())
               
@@ -66,18 +70,21 @@ struct TaskChecklistView: View {
                 
                 
                 //title
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 2) {
                     Text(serviceType)
-                        .font(.headline)
+                        .font(.subheadline)
                     
                     Text(vehicleName)
-                        .font(.caption)
+                        .font(.caption2)
                     
                     Text("DUE")
-                        .font(.caption)
+                        .font(.caption2)
                     
                     Text(dueDate)
-                        .font(.caption)
+                        .font(.caption2)
+                    
+                    Text(mileage)
+                        .font(.caption2)
                     
                     
                 }
@@ -92,16 +99,53 @@ struct TaskChecklistView: View {
             
             
         }
-        .padding()
-        //.frame(width: 10)
-        //.background(Color.white)
-        //.clipShape(RoundedRectangle(cornerRadius: 12))
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
+        //.padding kotak
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
-            RoundedRectangle(cornerRadius: 30)
-                .stroke(Color.gray.opacity(0.3), lineWidth: 2)
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
         )
+        .padding(.horizontal, 16)
+        .padding(.vertical, 4)
+        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color(.systemGray6))
+        
+        //swipe
+        .swipeActions(edge: .trailing) {
+            
+            Button {
+                //print("Move to Completed")
+                onStatusChange("Completed")
+            } label: {
+                Label("Completed", systemImage: "checkmark.circle.fill")
+            }
+            .tint(.green)
+            
+            
+            Button {
+                onStatusChange("InProgress")
+            } label: {
+                Label("Progress", systemImage: "clock.fill")
+            }
+            .tint(.blue)
+        }
+        .swipeActions(edge: .leading) {
+            Button {
+                onStatusChange("Overdue")
+            } label: {
+                Label("Overdue", systemImage: "exclamationmark.triangle.fill")
+            }
+            .tint(.red)
+        }
+        
+
+        
+        
         
         
     }
@@ -112,12 +156,16 @@ struct TaskChecklistView: View {
     
     TaskChecklistView(
         
-                serviceType: "Preview Vehicle",
-                vehicleName: "Preview Vehicle",
-                daysLeft: 5,
-                dueDate: "26 September 2023"
-                
-            
+        serviceType: "Preview Vehicle",
+        vehicleName: "Preview Vehicle",
+        daysLeft: 5,
+        dueDate: "26 September 2023",
+        mileage: "80,000 KM",
+        iconName: "star.fill",
+        status: "Pending"
         
-    )  
+        
+        
+    )   {newsStatus in print(newsStatus)
+    }
 }
