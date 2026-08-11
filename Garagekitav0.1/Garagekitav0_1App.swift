@@ -11,7 +11,7 @@ import SwiftUI
 struct Garagekitav0_1App: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            MainView() 
         }
     }
 }
