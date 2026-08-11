@@ -12,10 +12,13 @@ struct MainView: View {
     // Simpan tab yang sedang dipilih oleh pengguna.
     @State private var selectedTab: AppTab = .home
     
+    @StateObject private var taskstore  = TaskStore()
+    
     var body: some View {
         // ZStack digunakan supaya page berada di belakang dan navbar berada di bawah.
         ZStack(alignment: .bottom) {
             selectedPage
+                .environmentObject(taskstore)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             
             customTabBar
