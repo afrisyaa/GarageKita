@@ -26,12 +26,22 @@ struct AddMaintenancePage: View {
     @State private var maintenanceTitle = ""
     
     @State private var selectedVehicle =
-        "Myvi VVA 1234"
+        VehicleStorage.vehicleNames().first ?? ""
+    
+    @State private var vehicles =
+        VehicleStorage.vehicleNames()
     
     @State private var maintenanceDate =
         Date()
     
     @State private var price = ""
+    
+    @State private var isMaintenanceReminderOn = false
+    
+    @State private var showingWarrantyPage = false
+    
+    @State private var savedWarrantyMaintenance:
+        MaintenanceItem?
     
     
     @State private var selectedMaintenanceType =
@@ -42,13 +52,6 @@ struct AddMaintenancePage: View {
     
     
     // MARK: - Vehicles
-    
-    private let vehicles = [
-        "Myvi VVA 1234",
-        "Honda City VAB 5678",
-        "Proton X70 VGN 9012"
-    ]
-    
     
     // MARK: - Maintenance Types
     
@@ -84,17 +87,23 @@ struct AddMaintenancePage: View {
             
             // MARK: Background
             
+            
+            
+            
             Color(
                 red: 0.95,
                 green: 0.95,
                 blue: 0.97
             )
-            .ignoresSafeArea()
+            //.ignoresSafeArea()
             
             
             VStack(spacing: 0) {
                 
                 // MARK: Header
+                
+                Color.white
+                    .frame(height: 1)
                 
                 HStack {
                     
@@ -144,8 +153,8 @@ struct AddMaintenancePage: View {
                     .foregroundColor(.clear)
                 }
                 .padding(.horizontal, 20)
-                .frame(height: 56)
-                .background(Color.orange)
+                .frame(height: 65)
+                .background(Color(red: 1.0, green: 0.67, blue: 0.0))
                 
                 
                 // MARK: Scroll Content
@@ -163,33 +172,73 @@ struct AddMaintenancePage: View {
                         
                         VStack(spacing: 12) {
                             
-                            ZStack {
-                                
-                                Circle()
-                                    .fill(
-                                        Color.orange.opacity(
-                                            0.15
+                            Menu {
+                                ForEach(
+                                    maintenanceTypes,
+                                    id: \.name
+                                ) { type in
+                                    
+                                    Button {
+                                        selectedMaintenanceType =
+                                            type
+                                    } label: {
+                                        Label(
+                                            type.name,
+                                            systemImage:
+                                                type.icon
+                                        )
+                                    }
+                                }
+                            } label: {
+                                ZStack {
+                                    
+                                    Circle()
+                                        .fill(
+                                            Color(red: 1.0, green: 0.67, blue: 0.0).opacity(
+                                                0.15
+                                            )
+                                        )
+                                        .frame(
+                                            width: 90,
+                                            height: 90
+                                        )
+                                    
+                                    Image(
+                                        systemName:
+                                            selectedMaintenanceType.icon
+                                    )
+                                    .font(
+                                        .system(
+                                            size: 36,
+                                            weight: .medium
                                         )
                                     )
-                                    .frame(
-                                        width: 110,
-                                        height: 110
+                                    .foregroundStyle(
+                                        Color(red: 1.0, green: 0.67, blue: 0.0)
                                     )
-                                
-                                Image(
-                                    systemName:
-                                        selectedMaintenanceType.icon
-                                )
-                                .font(
-                                    .system(
-                                        size: 48,
-                                        weight: .medium
-                                    )
-                                )
-                                .foregroundColor(
-                                    .orange
-                                )
+                                    
+                                    Circle()
+                                        .fill(
+                                            Color(red: 0.02, green: 0.32, blue: 0.56)
+                                        )
+                                        .frame(
+                                            width: 28,
+                                            height: 28
+                                        )
+                                        .overlay(
+                                            Image(systemName: "pencil")
+                                                .font(.caption2)
+                                                .bold()
+                                                .foregroundStyle(.white)
+                                        )
+                                        .offset(x: 29, y: 29)
+                                }
                             }
+                            
+                            Text("Tap to change icon")
+                                .font(.caption)
+                                .bold()
+                                .foregroundStyle(.gray)
                             
                             
                             Text("Add Maintenance")
@@ -199,10 +248,8 @@ struct AddMaintenancePage: View {
                                         weight: .bold
                                     )
                                 )
-                                .foregroundColor(
-                                    .orange
-                                )
-                            
+                                .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
+
                             
                             Text(
                                 "Record your vehicle maintenance"
@@ -210,9 +257,8 @@ struct AddMaintenancePage: View {
                             .font(
                                 .system(size: 15)
                             )
-                            .foregroundColor(
-                                .gray
-                            )
+                            .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
+
                         }
                         .frame(
                             maxWidth: .infinity
@@ -234,9 +280,7 @@ struct AddMaintenancePage: View {
                                         systemName:
                                             "wrench.and.screwdriver.fill"
                                     )
-                                    .foregroundColor(
-                                        .orange
-                                    )
+                                    .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                                     .frame(width: 25)
                                     
                                     Text("Maintenance")
@@ -246,9 +290,8 @@ struct AddMaintenancePage: View {
                                                 weight: .semibold
                                             )
                                         )
-                                        .foregroundColor(
-                                            .orange
-                                        )
+                                        .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
+
                                 }
                                 
                                 Spacer()
@@ -261,9 +304,7 @@ struct AddMaintenancePage: View {
                                 .font(
                                     .system(size: 16)
                                 )
-                                .foregroundColor(
-                                    .orange
-                                )
+                                .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                                 .multilineTextAlignment(
                                     .trailing
                                 )
@@ -286,9 +327,7 @@ struct AddMaintenancePage: View {
                                         systemName:
                                             "car.fill"
                                     )
-                                    .foregroundColor(
-                                        .orange
-                                    )
+                                    .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                                     .frame(width: 25)
                                     
                                     Text("Vehicle")
@@ -298,9 +337,9 @@ struct AddMaintenancePage: View {
                                                 weight: .semibold
                                             )
                                         )
-                                        .foregroundColor(
-                                            .orange
-                                        )
+                                        .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
+
+                                        
                                 }
                                 
                                 Spacer()
@@ -338,9 +377,9 @@ struct AddMaintenancePage: View {
                                     .font(
                                         .system(size: 15)
                                     )
-                                    .foregroundColor(
-                                        .orange
-                                    )
+                                    .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
+
+                                    
                                 }
                             }
                             .padding(.horizontal, 20)
@@ -361,8 +400,8 @@ struct AddMaintenancePage: View {
                                         systemName:
                                             selectedMaintenanceType.icon
                                     )
-                                    .foregroundColor(
-                                        .orange
+                                    .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56)
+
                                     )
                                     .frame(width: 25)
                                     
@@ -373,8 +412,8 @@ struct AddMaintenancePage: View {
                                                 weight: .semibold
                                             )
                                         )
-                                        .foregroundColor(
-                                            .orange
+                                        .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56)
+
                                         )
                                 }
                                 
@@ -427,9 +466,9 @@ struct AddMaintenancePage: View {
                                     .font(
                                         .system(size: 14)
                                     )
-                                    .foregroundColor(
-                                        .orange
-                                    )
+                                    .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
+
+                                    
                                 }
                             }
                             .padding(.horizontal, 20)
@@ -450,8 +489,8 @@ struct AddMaintenancePage: View {
                                         systemName:
                                             "calendar"
                                     )
-                                    .foregroundColor(
-                                        .orange
+                                    .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56)
+
                                     )
                                     .frame(width: 25)
                                     
@@ -462,22 +501,29 @@ struct AddMaintenancePage: View {
                                                 weight: .semibold
                                             )
                                         )
-                                        .foregroundColor(
-                                            .orange
+                                        .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56)
+
                                         )
                                 }
                                 
                                 Spacer()
                                 
-                                DatePicker(
-                                    "",
-                                    selection:
-                                        $maintenanceDate,
-                                    displayedComponents:
-                                        .date
-                                )
-                                .labelsHidden()
-                                .tint(.orange)
+                                ZStack {
+                                    Text(formattedDate(maintenanceDate))
+                                        .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
+                                    
+                                    DatePicker(
+                                        "",
+                                        selection:
+                                            $maintenanceDate,
+                                        displayedComponents:
+                                            .date
+                                    )
+                                    .labelsHidden()
+                                    //.tint(.orange)
+                                    .tint(Color(red: 0.02, green: 0.32, blue: 0.56))
+                                    .opacity(0.02)
+                                }
                             }
                             .padding(.horizontal, 20)
                             .frame(minHeight: 65)
@@ -497,8 +543,8 @@ struct AddMaintenancePage: View {
                                         systemName:
                                             "dollarsign.circle.fill"
                                     )
-                                    .foregroundColor(
-                                        .orange
+                                    .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56)
+
                                     )
                                     .frame(width: 25)
                                     
@@ -509,9 +555,8 @@ struct AddMaintenancePage: View {
                                                 weight: .semibold
                                             )
                                         )
-                                        .foregroundColor(
-                                            .orange
-                                        )
+                                        .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
+
                                 }
                                 
                                 Spacer()
@@ -555,36 +600,23 @@ struct AddMaintenancePage: View {
                         
                         // MARK: Selected Date
                         
-                        VStack(
-                            alignment: .leading,
-                            spacing: 8
-                        ) {
-                            
-                            Text("Maintenance Date")
+                        HStack {
+                            Text("Does the maintenance have warrenty?")
                                 .font(
                                     .system(
                                         size: 15,
                                         weight: .bold
                                     )
                                 )
-                                .foregroundColor(
-                                    .gray
-                                )
+                                .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
                             
-                            Text(
-                                formattedDate(
-                                    maintenanceDate
-                                )
-                            )
-                            .font(
-                                .system(
-                                    size: 17,
-                                    weight: .semibold
-                                )
-                            )
-                            .foregroundColor(
-                                .orange
-                            )
+                            Spacer()
+                            
+                            Toggle("", isOn: $isMaintenanceReminderOn)
+                                .labelsHidden()
+                                .tint(.green)
                         }
                         .padding(.horizontal, 5)
                         
@@ -597,7 +629,7 @@ struct AddMaintenancePage: View {
                             
                         } label: {
                             
-                            Text("Save Maintenance")
+                            Text("Next")
                                 .font(
                                     .system(
                                         size: 17,
@@ -609,9 +641,7 @@ struct AddMaintenancePage: View {
                                     maxWidth: .infinity
                                 )
                                 .frame(height: 55)
-                                .background(
-                                    Color.orange
-                                )
+                                .background(Color(red: 1.0, green: 0.67, blue: 0.0))
                                 .clipShape(
                                     RoundedRectangle(
                                         cornerRadius: 16
@@ -629,6 +659,31 @@ struct AddMaintenancePage: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            refreshVehicles()
+        }
+        .fullScreenCover(
+            isPresented: $showingWarrantyPage
+        ) {
+            
+            if let savedWarrantyMaintenance {
+                
+                WarrantyPage(
+                    vehicleName:
+                        savedWarrantyMaintenance.vehicle,
+                    serviceName:
+                        savedWarrantyMaintenance.title,
+                    store: "",
+                    serviceDate:
+                        savedWarrantyMaintenance.date,
+                    notes: "",
+                    onFinished: {
+                        showingWarrantyPage = false
+                        dismiss()
+                    }
+                )
+            }
+        }
     }
     
     
@@ -699,9 +754,31 @@ struct AddMaintenancePage: View {
         )
         
         
-        // MARK: Return To Care
+        // MARK: Next Step
         
-        dismiss()
+        if isMaintenanceReminderOn {
+            
+            savedWarrantyMaintenance =
+                newMaintenance
+            
+            showingWarrantyPage = true
+            
+        } else {
+            
+            dismiss()
+        }
+    }
+    
+    
+    private func refreshVehicles() {
+        
+        vehicles =
+            VehicleStorage.vehicleNames()
+        
+        if !vehicles.contains(selectedVehicle) {
+            selectedVehicle =
+                vehicles.first ?? ""
+        }
     }
     
     

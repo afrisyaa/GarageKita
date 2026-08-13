@@ -13,7 +13,7 @@ class TaskStore: ObservableObject {
     @Published var tasks: [TaskItem] = [
         TaskItem(
             serviceType: "Engine Oil Service",
-            vehicleName: "Myvi WEB 232",
+            vehicleName: VehicleStorage.vehicleName(at: 1),
             daysLeft: 5,
             dueDate: "15 Aug 2026",
             mileage: "80,000 KM",
@@ -24,7 +24,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Insurance Renewal",
-            vehicleName: "Honda City VAB 5678",
+            vehicleName: VehicleStorage.vehicleName(at: 0),
             daysLeft: 15,
             dueDate: "20 Sept 2026",
             mileage: "120,000 KM",
@@ -34,7 +34,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Engine Oil Service",
-            vehicleName: "Myvi WEB 232",
+            vehicleName: VehicleStorage.vehicleName(at: 1),
             daysLeft: 5,
             dueDate: "15 Aug 2026",
             mileage: "80,000 KM",
@@ -44,7 +44,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Tyre Service",
-            vehicleName: "Myvi WEB 232",
+            vehicleName: VehicleStorage.vehicleName(at: 1),
             daysLeft: 10,
             dueDate: "20 Aug 2026",
             mileage: "80,000 KM",
@@ -54,7 +54,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Brake Inspection",
-            vehicleName: "Honda City VAB 5678",
+            vehicleName: VehicleStorage.vehicleName(at: 0),
             daysLeft: 7,
             dueDate: "17 Aug 2026",
             mileage: "120,000 KM",
@@ -64,7 +64,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Roadtax Renewal",
-            vehicleName: "Honda City VAB 5678",
+            vehicleName: VehicleStorage.vehicleName(at: 0),
             daysLeft: 30,
             dueDate: "09 Sep 2026",
             mileage: "120,000 KM",
@@ -74,7 +74,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Insurance Renewal",
-            vehicleName: "Proton X70 VGN 9012",
+            vehicleName: VehicleStorage.vehicleName(at: 3),
             daysLeft: 45,
             dueDate: "24 Sep 2026",
             mileage: "95,000 KM",
@@ -84,7 +84,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Battery Check",
-            vehicleName: "Perodua Axia VCT 8812",
+            vehicleName: VehicleStorage.vehicleName(at: 0),
             daysLeft: 3,
             dueDate: "13 Aug 2026",
             mileage: "60,000 KM",
@@ -94,7 +94,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Air Filter Replacement",
-            vehicleName: "Myvi WEB 232",
+            vehicleName: VehicleStorage.vehicleName(at: 1),
             daysLeft: 14,
             dueDate: "24 Aug 2026",
             mileage: "80,000 KM",
@@ -104,7 +104,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Coolant Service",
-            vehicleName: "Proton Saga VBF 1023",
+            vehicleName: VehicleStorage.vehicleName(at: 3),
             daysLeft: 18,
             dueDate: "28 Aug 2026",
             mileage: "105,000 KM",
@@ -114,7 +114,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Engine Oil Service",
-            vehicleName: "Yamaha RXZ BPK 4567",
+            vehicleName: VehicleStorage.vehicleName(at: 2),
             daysLeft: 2,
             dueDate: "12 Aug 2026",
             mileage: "40,000 KM",
@@ -124,7 +124,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Tyre Replacement",
-            vehicleName: "Honda City VAB 5678",
+            vehicleName: VehicleStorage.vehicleName(at: 0),
             daysLeft: 6,
             dueDate: "16 Aug 2026",
             mileage: "120,000 KM",
@@ -134,7 +134,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Brake Pad Replacement",
-            vehicleName: "Proton X70 VGN 9012",
+            vehicleName: VehicleStorage.vehicleName(at: 3),
             daysLeft: 4,
             dueDate: "14 Aug 2026",
             mileage: "95,000 KM",
@@ -144,7 +144,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Battery Replacement",
-            vehicleName: "Perodua Axia VCT 8812",
+            vehicleName: VehicleStorage.vehicleName(at: 0),
             daysLeft: 1,
             dueDate: "11 Aug 2026",
             mileage: "60,000 KM",
@@ -154,7 +154,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Engine Oil Service",
-            vehicleName: "Proton Saga VBF 1023",
+            vehicleName: VehicleStorage.vehicleName(at: 3),
             daysLeft: 0,
             dueDate: "05 Aug 2026",
             mileage: "105,000 KM",
@@ -164,7 +164,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Roadtax Renewal",
-            vehicleName: "Myvi WEB 232",
+            vehicleName: VehicleStorage.vehicleName(at: 1),
             daysLeft: 0,
             dueDate: "01 Aug 2026",
             mileage: "80,000 KM",
@@ -174,7 +174,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Insurance Renewal",
-            vehicleName: "Honda City VAB 5678",
+            vehicleName: VehicleStorage.vehicleName(at: 0),
             daysLeft: 0,
             dueDate: "30 Jul 2026",
             mileage: "120,000 KM",
@@ -184,7 +184,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Tyre Inspection",
-            vehicleName: "Yamaha RXZ BPK 4567",
+            vehicleName: VehicleStorage.vehicleName(at: 2),
             daysLeft: 0,
             dueDate: "02 Aug 2026",
             mileage: "40,000 KM",
@@ -194,7 +194,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Engine Oil Service",
-            vehicleName: "Perodua Axia VCT 8812",
+            vehicleName: VehicleStorage.vehicleName(at: 0),
             daysLeft: -3,
             dueDate: "06 Aug 2026",
             mileage: "60,000 KM",
@@ -204,7 +204,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Roadtax Renewal",
-            vehicleName: "Proton X70 VGN 9012",
+            vehicleName: VehicleStorage.vehicleName(at: 3),
             daysLeft: -7,
             dueDate: "02 Aug 2026",
             mileage: "95,000 KM",
@@ -214,7 +214,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Insurance Renewal",
-            vehicleName: "Proton Saga VBF 1023",
+            vehicleName: VehicleStorage.vehicleName(at: 3),
             daysLeft: -10,
             dueDate: "30 Jul 2026",
             mileage: "105,000 KM",
@@ -224,7 +224,7 @@ class TaskStore: ObservableObject {
         
         TaskItem(
             serviceType: "Brake Inspection",
-            vehicleName: "Myvi WEB 232",
+            vehicleName: VehicleStorage.vehicleName(at: 1),
             daysLeft: -2,
             dueDate: "07 Aug 2026",
             mileage: "80,000 KM",

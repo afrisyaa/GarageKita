@@ -27,7 +27,9 @@ struct MainView: View {
             switch selectedTab {
                 
             case .home:
-                HomePage()
+                HomePage {
+                    selectedTab = .garage
+                }
                 
             case .care:
                 CarePage()
@@ -36,7 +38,7 @@ struct MainView: View {
                 GaragePage()
                 
             case .emergency:
-                EmergencyPage()
+                EmergencyContactView()
                 
             case .profile:
                 ProfilePage()
@@ -92,15 +94,25 @@ struct MainView: View {
             
             VStack(spacing: 4) {
                 
-                Image(
-                    systemName: tab.iconName
-                )
-                .font(.title2)
-                .foregroundStyle(
-                    selectedTab == tab
-                    ? .blue
-                    : .black
-                )
+                ZStack {
+                    Circle()
+                        .fill(
+                            selectedTab == tab
+                            ? Color(red: 0.02, green: 0.32, blue: 0.56)
+                            : Color.clear
+                        )
+                        .frame(width: 38, height: 38)
+                    
+                    Image(
+                        systemName: tab.iconName
+                    )
+                    .font(.title2)
+                    .foregroundStyle(
+                        selectedTab == tab
+                        ? .white
+                        : .black
+                    )
+                }
                 
                 Text(tab.title)
                     .font(.caption2)
@@ -128,7 +140,7 @@ struct MainView: View {
                     Circle()
                         .fill(
                             selectedTab == .garage
-                            ? Color.blue
+                            ? Color(red: 0.02, green: 0.32, blue: 0.56)
                             : Color.white
                         )
                         .frame(
@@ -181,6 +193,7 @@ enum AppTab {
     // MARK: Tab Title
     
     var title: String {
+       
         
         switch self {
             

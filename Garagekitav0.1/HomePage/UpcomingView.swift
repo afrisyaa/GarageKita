@@ -23,7 +23,7 @@ struct UpcomingView: View {
             VStack (alignment: .leading) {
                 
                 Text("Upcoming")
-                    .font(.headline)
+                    .font(.caption)
                     .bold()
                     .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                 
@@ -49,9 +49,9 @@ struct UpcomingView: View {
             Image(systemName: "exclamationmark")
                 .font(.title2)
                 .bold()
-                .foregroundStyle(.orange)
+                .foregroundStyle(Color(red: 242/255, green: 177/255, blue: 61/255))
                 .frame(width: 40, height: 40)
-                .background(Color.orange.opacity(0.15))
+                .background(Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15))
                 .clipShape(Circle())
                 .offset(x: 0)
             
@@ -63,7 +63,7 @@ struct UpcomingView: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
         
-        .frame(width: 168,  alignment: .leading )
+        .frame(maxWidth: .infinity, alignment: .leading)
         
         
         .frame(height: 92)
@@ -72,7 +72,7 @@ struct UpcomingView: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-            .stroke(Color.black.opacity(0.3), lineWidth: 2)
+                .stroke(Color.black.opacity(0.3), lineWidth: 0.5)
             
        
             

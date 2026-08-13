@@ -54,7 +54,7 @@ struct TotalSpentView: View {
         .padding(.horizontal, 10)
         .padding(.vertical, 10)
         
-        .frame(width: 350,  alignment: .leading )
+        .frame(maxWidth: .infinity, alignment: .leading)
         
         
         .frame(height: 75)
@@ -63,7 +63,7 @@ struct TotalSpentView: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-            .stroke(Color.black.opacity(0.3), lineWidth: 2)
+                .stroke(Color.black.opacity(0.3), lineWidth: 0.5)
             
        
             

@@ -20,17 +20,14 @@ struct AddFamilyMembersPage: View {
     @State private var relationship = "Child"
     @State private var phone = ""
     @State private var email = ""
-    @State private var selectedVehicle = "Myvi VVA 1234"
+    @State private var selectedVehicle =
+        VehicleStorage.vehicleNames().first ?? ""
+    
+    @State private var vehicles =
+        VehicleStorage.vehicleNames()
     
     
     // MARK: - Vehicle List
-    
-    private let vehicles = [
-        "Myvi VVA 1234",
-        "Honda City VAB 5678",
-        "Proton X70 VGN 9012"
-    ]
-    
     
     // MARK: - Colors
     
@@ -58,6 +55,9 @@ struct AddFamilyMembersPage: View {
             VStack(spacing: 0) {
                 
                 // MARK: - Top Bar
+                
+                Color.white
+                    .frame(height: 1)
                 
                 HStack {
                     
@@ -98,8 +98,9 @@ struct AddFamilyMembersPage: View {
                         .foregroundColor(.clear)
                 }
                 .padding(.horizontal, 20)
-                .frame(height: 56)
-                .background(Color.orange)
+                .frame(height: 65)
+                .background(Color(red:1.0, green: 0.67, blue: 0.0))
+                
                 
                 
                 // MARK: - Scrollable Content
@@ -204,16 +205,18 @@ struct AddFamilyMembersPage: View {
                                 
                                 HStack(spacing: 10) {
                                     
-                                    Image(
-                                        systemName:
-                                            "person.2.fill"
-                                    )
-                                    .foregroundColor(
-                                        blueColor
-                                    )
-                                    .frame(
-                                        width: 25
-                                    )
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15))
+                                            .frame(width: 34, height: 34)
+                                        
+                                        Image(
+                                            systemName:
+                                                "person.2.fill"
+                                        )
+                                        .foregroundColor(Color(red: 242/255, green: 177/255, blue: 61/255))
+                                    }
+                                    .frame(width: 34, height: 34)
                                     
                                     Text("Relationship")
                                         .font(
@@ -364,16 +367,21 @@ struct AddFamilyMembersPage: View {
                                     
                                     HStack(spacing: 10) {
                                         
-                                        Image(
-                                            systemName:
-                                                "car.fill"
-                                        )
-                                        .font(
-                                            .system(size: 20)
-                                        )
-                                        .foregroundColor(
-                                            blueColor
-                                        )
+                                        ZStack {
+                                            Circle()
+                                                .fill(Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15))
+                                                .frame(width: 34, height: 34)
+                                            
+                                            Image(
+                                                systemName:
+                                                    "car.fill"
+                                            )
+                                            .font(
+                                                .system(size: 20)
+                                            )
+                                            .foregroundColor(Color(red: 242/255, green: 177/255, blue: 61/255))
+                                        }
+                                        .frame(width: 34, height: 34)
                                         
                                         Text(
                                             "Linked Vehicle"
@@ -524,6 +532,9 @@ struct AddFamilyMembersPage: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            refreshVehicles()
+        }
     }
     
     
@@ -539,6 +550,18 @@ struct AddFamilyMembersPage: View {
         print("Vehicle: \(selectedVehicle)")
         
         dismiss()
+    }
+    
+    
+    private func refreshVehicles() {
+        
+        vehicles =
+            VehicleStorage.vehicleNames()
+        
+        if !vehicles.contains(selectedVehicle) {
+            selectedVehicle =
+                vehicles.first ?? ""
+        }
     }
 }
 
@@ -569,15 +592,15 @@ struct AddFamilyFormRow<Content: View>: View {
             
             HStack(spacing: 10) {
                 
-                Image(systemName: icon)
-                    .foregroundColor(
-                        Color(
-                            red: 0.02,
-                            green: 0.31,
-                            blue: 0.53
-                        )
-                    )
-                    .frame(width: 25)
+                ZStack {
+                    Circle()
+                        .fill(Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15))
+                        .frame(width: 34, height: 34)
+                    
+                    Image(systemName: icon)
+                        .foregroundColor(Color(red: 242/255, green: 177/255, blue: 61/255))
+                }
+                .frame(width: 34, height: 34)
                 
                 Text(title)
                     .font(

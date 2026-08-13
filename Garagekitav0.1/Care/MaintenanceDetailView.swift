@@ -28,8 +28,8 @@ struct MaintenanceDetailView: View {
     
     private let blueColor = Color(
         red: 0.02,
-        green: 0.31,
-        blue: 0.53
+        green: 0.32,
+        blue: 0.56
     )
     
     private let orange = Color(
@@ -59,7 +59,12 @@ struct MaintenanceDetailView: View {
                 
                 // MARK: - Top Bar
                 
+                Color.white
+                    .frame(height: 1)
+                
                 HStack {
+                    
+                    
                     
                     // Back Button
                     
@@ -117,8 +122,8 @@ struct MaintenanceDetailView: View {
                 }
                 .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity)
-                .frame(height: 48)
-                .background(orange)
+                .frame(height: 65)
+                .background(Color(red: 1.0, green: 0.67, blue: 0.0))
                 
                 
                 // MARK: - Main Content
@@ -134,7 +139,7 @@ struct MaintenanceDetailView: View {
                         
                         // MARK: - Centered Header
                         
-                        VStack(spacing: 8) {
+                        VStack(spacing: 3) {
                             
                             // Service Icon
                             
@@ -142,7 +147,7 @@ struct MaintenanceDetailView: View {
                                 
                                 Circle()
                                     .fill(
-                                        Color.orange.opacity(0.15)
+                                        Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15)
                                     )
                                     .frame(
                                         width: 110,
@@ -158,7 +163,7 @@ struct MaintenanceDetailView: View {
                                         weight: .medium
                                     )
                                 )
-                                .foregroundColor(.orange)
+                                .foregroundColor(Color(red: 242/255, green: 177/255, blue: 61/255))
                             }
                             
                             
@@ -171,7 +176,7 @@ struct MaintenanceDetailView: View {
                                         weight: .bold
                                     )
                                 )
-                                .foregroundColor(.primary)
+                                .foregroundColor(blueColor)
                                 .multilineTextAlignment(.center)
                             
                             
@@ -181,7 +186,7 @@ struct MaintenanceDetailView: View {
                                 .font(
                                     .system(size: 17)
                                 )
-                                .foregroundColor(.secondary)
+                                .foregroundColor(blueColor)
                                 .multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity)
@@ -242,6 +247,7 @@ struct MaintenanceDetailView: View {
                                     weight: .bold
                                 )
                             )
+                            .foregroundColor(blueColor)
                             
                             
                             DetailRow(
@@ -305,6 +311,7 @@ struct MaintenanceDetailView: View {
                                         weight: .bold
                                     )
                                 )
+                                .foregroundColor(blueColor)
                             
                             
                             Text(
@@ -313,7 +320,7 @@ struct MaintenanceDetailView: View {
                             .font(
                                 .system(size: 15)
                             )
-                            .foregroundColor(.secondary)
+                            .foregroundColor(blueColor)
                         }
                         .padding(18)
                         .frame(
@@ -344,6 +351,7 @@ struct DetailRow: View {
     let icon: String
     let title: String
     let value: String
+    private let blueColor = Color(red: 0.02, green: 0.32, blue: 0.56)
     
     
     var body: some View {
@@ -356,7 +364,7 @@ struct DetailRow: View {
             .font(
                 .system(size: 18)
             )
-            .foregroundColor(.orange)
+            .foregroundColor(Color(red: 242/255, green: 177/255, blue: 61/255))
             .frame(
                 width: 25
             )
@@ -371,7 +379,7 @@ struct DetailRow: View {
                     .font(
                         .system(size: 13)
                     )
-                    .foregroundColor(.secondary)
+                    .foregroundColor(blueColor)
                 
                 
                 Text(value)
@@ -381,6 +389,7 @@ struct DetailRow: View {
                             weight: .medium
                         )
                     )
+                    .foregroundColor(blueColor)
             }
             
             

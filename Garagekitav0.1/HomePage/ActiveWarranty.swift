@@ -42,9 +42,9 @@ struct ActiveWarranty: View {
             Image(systemName: "shield.lefthalf.filled")
                 .font(.title2)
                 .bold()
-                .foregroundStyle(.orange)
+                .foregroundStyle(Color(red: 242/255, green: 177/255, blue: 61/255))
                 .frame(width: 40, height: 40)
-                .background(Color.orange.opacity(0.15))
+                .background(Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15))
                 .clipShape(Circle())
                 .offset(x: 0)
             
@@ -56,7 +56,7 @@ struct ActiveWarranty: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
         
-        .frame(width: 168,  alignment: .leading )
+        .frame(maxWidth: .infinity, alignment: .leading)
         
         
         .frame(height: 92)
@@ -65,7 +65,7 @@ struct ActiveWarranty: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-            .stroke(Color.black.opacity(0.3), lineWidth: 2)
+                .stroke(Color.black.opacity(0.3), lineWidth: 0.5)
             
        
             

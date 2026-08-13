@@ -12,10 +12,11 @@ struct VehicleSummaryCard: View {
     let vehicleCount:  Int
     let vehicleLabel: String
     let imageName: String
-    var imageWidth: CGFloat = 240
-    var imageHeight: CGFloat = 125
-    var imageOffsetX: CGFloat = -35
-    var imageOffsetY: CGFloat = 10
+    var imageWidth: CGFloat = 165
+    var imageHeight: CGFloat = 128
+    var imageOffsetX: CGFloat = 0
+    var imageOffsetY: CGFloat = 0
+    var onViewAll: () -> Void = {}
     
     
     
@@ -25,68 +26,70 @@ struct VehicleSummaryCard: View {
         
         
         
-        ZStack(alignment: .topTrailing) {
-            HStack {
-            
+        GeometryReader { geometry in
+            HStack(spacing: 18) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Your Vehicles")
-                        .font(.system(size: 12, weight: .heavy))
-                        
-                        .foregroundStyle(.white)
                     
+                    Button {
+                        onViewAll()
+                    } label: {
+                        HStack(spacing: 7) {
+                            Text("View All")
+                                .underline()
+                            
+                            Image(systemName: "arrow.right")
+                        }
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(.white)
+                    }
+                    .buttonStyle(.plain)
+                    
+                    Spacer()
+                    
+                    Text("Your Vehicles")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.white)
                     
                     Text("\(vehicleCount)")
-                        .font(.system(size: 40, weight: .semibold))
-                        
+                        .font(.system(size: 44, weight: .bold))
                         .foregroundStyle(.white)
-                    
-                    Text("Vehicles")
-                        .font(.system(size: 15, weight: .heavy))
-                        
+                   
+                    /*
+                    Text(vehicleLabel)
+                        .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(.white)
+                     */
                     
+                    Spacer()
                     
-                  
-                
                     
                 }
-                Spacer()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
                 Image(imageName)
                     .resizable()
-                    .scaledToFit()
-                    .frame(width: imageWidth, height: imageHeight)
-                    .offset(x: imageOffsetX , y: imageOffsetY)
+                    .scaledToFill()
+                    .frame(
+                        width: max(geometry.size.width * 0.48, imageWidth),
+                        height: imageHeight
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .offset(x: imageOffsetX, y: imageOffsetY)
             }
-            
-            
-             NavigationLink {
-                   GarageViewAll()
-             } label: {
-                 Text("View All")
-                     .font(.system(size: 15, weight: .semibold))
-                     .foregroundStyle(.white)
-                     .underline()
-                     .offset(x: -1, y: 4)
-                     .bold()
-             }
-            
-            
-            
-        }   .padding()
+            .padding(.horizontal, 20)
+            .padding(.vertical, 18)
+        }
             .frame(maxWidth: .infinity)
-            .frame(height: 180)
+            .frame(height: 170)
             //colour
             .background(Color(red: 0.0, green: 0.32, blue: 0.58))
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .clipShape(RoundedRectangle(cornerRadius: 22))
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: 22)
                 .stroke(Color.gray.opacity(0.3), lineWidth: 1)
                 
             )
         
-            
-            .padding(.horizontal, 16)
-            
             
             //.frame(height: 140)
         

@@ -12,6 +12,7 @@ struct WarrantyPage: View {
     let store: String
     let serviceDate: Date
     let notes: String
+    var onFinished: (() -> Void)? = nil
     
     // MARK: - Warranty Information
     
@@ -67,6 +68,9 @@ struct WarrantyPage: View {
                 
                 // MARK: Top Bar
                 
+                Color.white
+                    .frame(height: 1)
+                
                 HStack {
                     
                     Button {
@@ -105,64 +109,22 @@ struct WarrantyPage: View {
                     .foregroundColor(.clear)
                 }
                 .padding(.horizontal, 20)
-                .frame(height: 48)
+                .frame(height: 65)
                 .background(orange)
                 
                 
                 // MARK: Content
                 
-                ScrollView(
-                    showsIndicators: false
-                ) {
+                GeometryReader { geometry in
                     
-                    VStack(spacing: 20) {
+                    let formWidth =
+                        min(300, geometry.size.width - 100)
+                    
+                    ScrollView(
+                        showsIndicators: false
+                    ) {
                         
-                        // MARK: Tabs
-                        
-                        HStack(spacing: 0) {
-                            
-                            Text("Maintenance")
-                                .font(
-                                    .system(
-                                        size: 15,
-                                        weight: .medium
-                                    )
-                                )
-                                .foregroundColor(darkBlue)
-                                .frame(
-                                    maxWidth: .infinity
-                                )
-                                .frame(height: 38)
-                            
-                            
-                            Text("Warranty")
-                                .font(
-                                    .system(
-                                        size: 15,
-                                        weight: .bold
-                                    )
-                                )
-                                .foregroundColor(.white)
-                                .frame(
-                                    maxWidth: .infinity
-                                )
-                                .frame(height: 38)
-                                .background(
-                                    Capsule()
-                                        .fill(darkBlue)
-                                )
-                        }
-                        .padding(3)
-                        .overlay(
-                            Capsule()
-                                .stroke(
-                                    Color.gray.opacity(0.6),
-                                    lineWidth: 1
-                                )
-                        )
-                        .padding(.horizontal, 20)
-                        .padding(.top, 15)
-                        
+                        VStack(spacing: 12) {
                         
                         // MARK: Warranty Detail
                         
@@ -218,12 +180,13 @@ struct WarrantyPage: View {
                                     .foregroundColor(darkBlue)
                                 
                                 
-                                HStack(spacing: 8) {
+                                HStack(spacing: 4) {
                                     
                                     WarrantyDateBox(
                                         title: "Start Date",
                                         date: $startDate
                                     )
+                                    .frame(maxWidth: .infinity)
                                     
                                     Text("to")
                                         .font(
@@ -238,7 +201,9 @@ struct WarrantyPage: View {
                                         title: "End Date",
                                         date: $endDate
                                     )
+                                    .frame(maxWidth: .infinity)
                                 }
+                                .frame(maxWidth: .infinity)
                             }
                             
                             
@@ -306,7 +271,7 @@ struct WarrantyPage: View {
                                     .frame(
                                         maxWidth: .infinity
                                     )
-                                    .frame(height: 140)
+                                    .frame(height: 120)
                                     .background(Color.white)
                                     .clipShape(
                                         RoundedRectangle(
@@ -326,7 +291,7 @@ struct WarrantyPage: View {
                                 .buttonStyle(.plain)
                             }
                         }
-                        .padding(.horizontal, 25)
+                        .frame(width: formWidth)
                         
                         
                         // MARK: Save Warranty
@@ -358,8 +323,19 @@ struct WarrantyPage: View {
                                     )
                                 )
                         }
-                        .padding(.horizontal, 25)
-                        .padding(.bottom, 30)
+                        .frame(width: 240)
+                        .padding(.bottom, 20)
+                        }
+                        .frame(
+                            maxWidth: .infinity
+                        )
+                        .frame(
+                            minHeight: geometry.size.height * 0.100,
+                            alignment: .center
+                        )
+                        .padding(.horizontal, 50)
+                        .padding(.top, 24)
+                        .padding(.bottom, 24)
                     }
                 }
             }
@@ -401,7 +377,11 @@ struct WarrantyPage: View {
         ) {
             
             Button("OK") {
-                dismiss()
+                if let onFinished {
+                    onFinished()
+                } else {
+                    dismiss()
+                }
             }
             
         } message: {
@@ -530,6 +510,7 @@ struct WarrantyInput: View {
                 )
             )
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -551,28 +532,30 @@ struct WarrantyDateBox: View {
     
     var body: some View {
         
-        HStack(spacing: 4) {
+        ZStack {
             
-            Text(
-                formattedDate(date)
-            )
-            .font(
-                .system(size: 12)
-            )
-            .foregroundColor(darkBlue)
-            .lineLimit(1)
-            
-            Spacer()
-            
-            Image(
-                systemName: "calendar"
-            )
-            .font(
-                .system(size: 15)
-            )
-            .foregroundColor(
-                darkBlue.opacity(0.6)
-            )
+            HStack(spacing: 4) {
+                
+                Image(
+                    systemName: "calendar"
+                )
+                .font(
+                    .system(size: 12)
+                )
+                .foregroundColor(
+                    darkBlue.opacity(0.6)
+                )
+                
+                Text(
+                    formattedDate(date)
+                )
+                .font(
+                    .system(size: 12)
+                )
+                .foregroundColor(darkBlue)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            }
             
             DatePicker(
                 "",
@@ -581,6 +564,7 @@ struct WarrantyDateBox: View {
             )
             .labelsHidden()
             .tint(darkBlue)
+            .opacity(0.02)
         }
         .padding(
             .horizontal,

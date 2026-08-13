@@ -31,9 +31,8 @@ struct TaskDashboard: View {
     var body: some View {
         VStack(spacing: 0) {
             
-           
-            
-            
+            Color.white
+                .frame(height: 1)
             
             // Bar kuning atas
             ZStack {

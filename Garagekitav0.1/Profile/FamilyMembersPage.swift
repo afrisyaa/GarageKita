@@ -17,6 +17,7 @@ struct FamilyMembersPage: View {
     // MARK: - State
     
     @State private var showAddMember = false
+    @State private var showInviteMember = false
     
     
     // MARK: - Colors
@@ -25,6 +26,12 @@ struct FamilyMembersPage: View {
         red: 0.02,
         green: 0.31,
         blue: 0.53
+    )
+    
+    private let orangeColor = Color(
+        red: 1.0,
+        green: 0.67,
+        blue: 0.0
     )
     
     
@@ -45,6 +52,9 @@ struct FamilyMembersPage: View {
             VStack(spacing: 0) {
                 
                 // MARK: - Top Bar
+                
+                Color.white
+                    .frame(height: 1)
                 
                 HStack {
                     
@@ -82,9 +92,10 @@ struct FamilyMembersPage: View {
                     
                     // Add Button
                     Button {
-                        showAddMember = true
+                        //showAddMember = true
+                        showInviteMember = true
                     } label: {
-                        Image(systemName: "plus")
+                        Image(systemName: "square.and.arrow.up")
                             .font(
                                 .system(
                                     size: 25,
@@ -95,8 +106,8 @@ struct FamilyMembersPage: View {
                     }
                 }
                 .padding(.horizontal, 20)
-                .frame(height: 56)
-                .background(Color.orange)
+                .frame(height: 65)
+                .background(Color(red:1.0, green: 0.67, blue: 0.0))
                 
                 
                 // MARK: - Scrollable Content
@@ -113,11 +124,7 @@ struct FamilyMembersPage: View {
                             
                             Circle()
                                 .fill(
-                                    Color(
-                                        red: 0.92,
-                                        green: 0.95,
-                                        blue: 0.98
-                                    )
+                                    orangeColor.opacity(0.15)
                                 )
                                 .frame(
                                     width: 120,
@@ -135,7 +142,7 @@ struct FamilyMembersPage: View {
                                 )
                             )
                             .foregroundColor(
-                                blueColor
+                                orangeColor
                             )
                         }
                         .padding(.top, 22)
@@ -176,42 +183,45 @@ struct FamilyMembersPage: View {
                         // MARK: - Siti Aisyah
                         
                         FamilyMemberCard(
-                            name: "Siti Aisyah",
-                            role: "Spouse",
+                            name: "Ariena",
+                            role: "Daughter",
                             phone: "012-345 6789",
-                            email: "aisyah@example.com",
+                            email: "Ariena@example.com",
                             vehicles: [
-                                "Honda City VAB 5678"
+                                vehicleName(at: 1)
                             ],
-                            blueColor: blueColor
+                            blueColor: blueColor,
+                            orangeColor: orangeColor
                         )
                         
                         
                         // MARK: - Ahmad Danish
                         
                         FamilyMemberCard(
-                            name: "Ahmad Danish",
+                            name: "Norshahid",
                             role: "Child",
                             phone: "013-987 6543",
-                            email: "danish@example.com",
+                            email: "Norshahid@example.com",
                             vehicles: [
-                                "Proton X70 VGN 9012"
+                                vehicleName(at: 2)
                             ],
-                            blueColor: blueColor
+                            blueColor: blueColor,
+                            orangeColor: orangeColor
                         )
                         
                         
                         // MARK: - Nur Iman
                         
                         FamilyMemberCard(
-                            name: "Nur Iman",
-                            role: "Child",
+                            name: "Farisya",
+                            role: "Daughter",
                             phone: "017-111 2233",
-                            email: "iman@example.com",
+                            email: "FarisyaImut@example.com",
                             vehicles: [
-                                "Myvi VVA 1234"
+                                vehicleName(at: 0)
                             ],
-                            blueColor: blueColor
+                            blueColor: blueColor,
+                            orangeColor: orangeColor
                         )
                         
                         
@@ -231,6 +241,24 @@ struct FamilyMembersPage: View {
         .sheet(isPresented: $showAddMember) {
             AddFamilyMembersPage()
         }
+        .sheet(isPresented: $showInviteMember) {
+            InviteFamilyMemberView()
+        }
+    }
+    
+    
+    private func vehicleName(
+        at index: Int
+    ) -> String {
+        
+        let vehicles =
+            VehicleStorage.vehicleNames()
+        
+        guard vehicles.indices.contains(index) else {
+            return vehicles.first ?? "No Vehicle"
+        }
+        
+        return vehicles[index]
     }
 }
 
@@ -245,6 +273,7 @@ struct FamilyMemberCard: View {
     let email: String
     let vehicles: [String]
     let blueColor: Color
+    let orangeColor: Color
     
     
     var body: some View {
@@ -267,11 +296,7 @@ struct FamilyMemberCard: View {
                         
                         Circle()
                             .fill(
-                                Color(
-                                    red: 0.92,
-                                    green: 0.95,
-                                    blue: 0.98
-                                )
+                                orangeColor.opacity(0.15)
                             )
                             .frame(
                                 width: 82,
@@ -289,7 +314,7 @@ struct FamilyMemberCard: View {
                             )
                         )
                         .foregroundColor(
-                            blueColor
+                            orangeColor
                         )
                     }
                     
@@ -456,7 +481,7 @@ struct FamilyMemberCard: View {
                             .system(size: 17)
                         )
                         .foregroundColor(
-                            blueColor
+                            orangeColor
                         )
                         
                         

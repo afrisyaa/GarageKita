@@ -11,6 +11,10 @@ struct HomePage: View {
     
     
     @EnvironmentObject var taskStore: TaskStore
+    var onViewAllVehicles: () -> Void = {}
+    
+    @State private var vehicles =
+        VehicleStorage.load()
     
     
     var body: some View {
@@ -20,6 +24,9 @@ struct HomePage: View {
 
         NavigationStack {
             VStack(spacing: 0) {
+                
+                Color.white
+                    .frame(height: 1)
                 
                 //bar kuning atas
                 ZStack {
@@ -51,7 +58,7 @@ struct HomePage: View {
                         VStack(alignment: .leading, spacing: 4) {
                             
                             
-                            Text("Good Morning, Guest!👋")
+                            Text("Good Morning, IrfanKhasim!👋")
                                 .font(.title2)
                                 .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                                 .bold()
@@ -67,43 +74,22 @@ struct HomePage: View {
                         
                         //card for vehicle summary
                         TabView {
-                            VehicleSummaryCard(
-                                vehicleCount: 4,
-                                vehicleLabel: "Vehicles",
-                                imageName: "Myvi"
-                            )
-
-                            VehicleSummaryCard(
-                                vehicleCount: 4,
-                                vehicleLabel: "Vehicles",
-                                imageName: "kancil"
-                            )
-                            
-                            
-                            
-                            VehicleSummaryCard(
-                                vehicleCount: 4,
-                                vehicleLabel: "Vehicles",
-                                imageName: "RXZ"
-                            )
-                            
-                            VehicleSummaryCard(
-                                vehicleCount: 4,
-                                vehicleLabel: "Vehicles",
-                                imageName: "X50",
-                                imageWidth: 245,
-                                imageHeight: 150,
-                                imageOffsetX: -35,
-                                imageOffsetY: 12
-                            )
-                            
-                            
-                          
-                            
+                            ForEach(vehicles) { vehicle in
+                                VehicleSummaryCard(
+                                    vehicleCount:
+                                        vehicles.count,
+                                    vehicleLabel: "Vehicles",
+                                    imageName:
+                                        vehicle.imageName,
+                                    onViewAll:
+                                        onViewAllVehicles
+                                )
+                            }
                         }
                         .frame(height: 180)
                         .tabViewStyle(.page(indexDisplayMode: .never))
                         .padding(.top, 16)
+                        .padding(.horizontal, 16)
                         
                         
                         
@@ -114,7 +100,8 @@ struct HomePage: View {
                             
                             ActiveWarranty()
                             
-                        } .padding(.top, 20)
+                        } .padding(.top, 5)
+                            .padding(.horizontal, 16)
                         
                         TotalSpentView()
                         
@@ -122,7 +109,7 @@ struct HomePage: View {
                         
                         
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(.horizontal, 10)
+                            .padding(.horizontal, 16)
                             .padding(.top, 8)
                         
                         
@@ -132,7 +119,7 @@ struct HomePage: View {
                         HStack {
                             
                             Text("Upcoming Tasks")
-                                .font(.title3)
+                                .font(.system(size: 12, weight: .bold))
                                 .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                                 .bold()
                             Spacer()
@@ -143,17 +130,18 @@ struct HomePage: View {
                                 TaskDashboard()
                             }
                             
-                            .font(.title3)
+                            .font(.system(size: 12, weight: .bold))
                             .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                             .bold()
                             .padding()
+                            .underline()
                             
                             //.offset(x: 145)
                             
                             
                             
                         }
-                        .padding(.horizontal, 24)
+                        .padding(.horizontal, 16)
                         
                         //Spacer()
                         
@@ -175,6 +163,9 @@ struct HomePage: View {
                 }
             }
         } //petak oren
+        .onAppear {
+            vehicles = VehicleStorage.load()
+        }
         
         
         

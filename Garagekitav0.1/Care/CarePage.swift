@@ -15,20 +15,43 @@ struct CarePage: View {
     @State private var showingAddMaintenance = false
     
     @State private var maintenanceItems: [MaintenanceItem] = []
+    @State private var warrantyItems: [WarrantyItem] = [
+        WarrantyItem(
+            title: "Engine Oil",
+            vehicle: VehicleStorage.vehicleName(at: 1),
+            validUntil: "Valid until 24 Aug 2026",
+            date: "24 Aug 2026",
+            daysLeft: "22 days left",
+            price: "RM190.00"
+        ),
+        WarrantyItem(
+            title: "Brake Pad (Front)",
+            vehicle: VehicleStorage.vehicleName(at: 0),
+            validUntil: "Valid until 10 Sept 2026",
+            date: "10 Sept 2026",
+            daysLeft: "40 days left",
+            price: "RM350.00"
+        ),
+        WarrantyItem(
+            title: "Aircond Service",
+            vehicle: VehicleStorage.vehicleName(at: 3),
+            validUntil: "Valid until 15 Sept 2026",
+            date: "15 Sept 2026",
+            daysLeft: "45 days left",
+            price: "RM250.00"
+        )
+    ]
     
     
     // MARK: - Colors
     
     private let blueColor = Color(
-        red: 0.02,
-        green: 0.31,
-        blue: 0.53
+        red: 0.02, green: 0.32, blue: 0.56
     )
     
+    
     private let orangeColor = Color(
-        red: 1.0,
-        green: 0.55,
-        blue: 0.10
+        red:1.0, green: 0.67, blue: 0.0
     )
     
     
@@ -42,32 +65,34 @@ struct CarePage: View {
                 
                 // MARK: Background
                 
+              
+                
                 Color(
                     red: 0.95,
                     green: 0.95,
                     blue: 0.97
                 )
-                .ignoresSafeArea()
+                
                 
                 
                 VStack(spacing: 0) {
                     
                     // MARK: Header
                     
+                    Color.white
+                        .frame(height: 1)
+
+                    
                     HStack {
                         
-                        Spacer()
                         
                         Text("Care")
-                            .font(
-                                .system(
-                                    size: 22,
-                                    weight: .bold
-                                )
+                            .font(.title3
                             )
+                            .bold()
                             .foregroundColor(.white)
-                        
-                        Spacer()
+                            .frame(maxWidth: .infinity)
+                            .offset(x: 25)
                         
                         Button {
                             
@@ -84,156 +109,161 @@ struct CarePage: View {
                                 )
                                 .foregroundColor(.white)
                         }
+                        .frame(width: 40)
                     }
                     .padding(.horizontal, 20)
-                    .frame(height: 48)
-                    .background(orangeColor)
-                    
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 65)
+                    .background(Color(red:1.0, green: 0.67, blue: 0.0))
+                    //Color(red:1.0, green: 0.67, blue: 0.0)
                     
                     // MARK: Main Content
                     
-                    ScrollView(
-                        showsIndicators: false
-                    ) {
+                    List {
                         
-                        VStack(
-                            alignment: .leading,
-                            spacing: 20
-                        ) {
+                        // MARK: Maintenance / Warranty Toggle
+                        
+                        HStack(spacing: 0) {
                             
-                            // MARK: Maintenance / Warranty Toggle
+                            // MARK: Maintenance
                             
-                            HStack(spacing: 0) {
+                            Button {
                                 
-                                // MARK: Maintenance
-                                
-                                Button {
-                                    
-                                    withAnimation(
-                                        .easeInOut(duration: 0.2)
-                                    ) {
-                                        showingWarranty = false
-                                    }
-                                    
-                                } label: {
-                                    
-                                    Text("Maintenance")
-                                        .font(
-                                            .system(
-                                                size: 17,
-                                                weight: showingWarranty
-                                                ? .regular
-                                                : .bold
-                                            )
-                                        )
-                                        .foregroundColor(
-                                            showingWarranty
-                                            ? blueColor
-                                            : .white
-                                        )
-                                        .frame(
-                                            maxWidth: .infinity
-                                        )
-                                        .frame(height: 38)
-                                        .background(
-                                            Capsule()
-                                                .fill(
-                                                    showingWarranty
-                                                    ? Color.clear
-                                                    : blueColor
-                                                )
-                                        )
+                                withAnimation(
+                                    .easeInOut(duration: 0.2)
+                                ) {
+                                    showingWarranty = true
                                 }
                                 
+                            } label: {
                                 
-                                // MARK: Warranty
-                                
-                                Button {
-                                    
-                                    withAnimation(
-                                        .easeInOut(duration: 0.2)
-                                    ) {
-                                        showingWarranty = true
-                                    }
-                                    
-                                } label: {
-                                    
-                                    Text("Warranty")
-                                        .font(
-                                            .system(
-                                                size: 17,
-                                                weight: .bold
-                                            )
+                                Text("Maintenance")
+                                    .font(
+                                        .system(
+                                            size: 17,
+                                            weight: showingWarranty
+                                            ? .regular
+                                            : .bold
                                         )
-                                        .foregroundColor(
-                                            showingWarranty
-                                            ? .white
-                                            : blueColor
-                                        )
-                                        .frame(
-                                            maxWidth: .infinity
-                                        )
-                                        .frame(height: 38)
-                                        .background(
-                                            Capsule()
-                                                .fill(
-                                                    showingWarranty
-                                                    ? blueColor
-                                                    : Color.clear
-                                                )
-                                        )
-                                }
-                            }
-                            .padding(4)
-                            .frame(height: 50)
-                            .background(
-                                Capsule()
-                                    .fill(Color.white)
-                            )
-                            .overlay(
-                                Capsule()
-                                    .stroke(
-                                        Color.gray.opacity(0.55),
-                                        lineWidth: 1
                                     )
-                            )
+                                    .foregroundColor(
+                                        showingWarranty
+                                        ? blueColor
+                                        : .white
+                                    )
+                                    .frame(
+                                        maxWidth: .infinity
+                                    )
+                                    .frame(height: 38)
+                                    .background(
+                                        Capsule()
+                                            .fill(
+                                                showingWarranty
+                                                ? Color.clear
+                                                : blueColor
+                                            )
+                                    )
+                            }
                             
                             
-                            // MARK: Section Title
+                            // MARK: Warranty
                             
-                            Text(
-                                showingWarranty
-                                ? "Active Warranties"
-                                : "Active Maintenance"
-                            )
-                            .font(
-                                .system(
-                                    size: 20,
-                                    weight: .bold
-                                )
-                            )
-                            .foregroundColor(
-                                showingWarranty
-                                ? blueColor
-                                : orangeColor
-                            )
-                            
-                            
-                            // MARK: Content Cards
-                            
-                            if showingWarranty {
+                            Button {
                                 
-                                warrantyContent
+                                withAnimation(
+                                    .easeInOut(duration: 0.2)
+                                ) {
+                                    showingWarranty = true
+                                }
                                 
-                            } else {
+                            } label: {
                                 
-                                maintenanceContent
+                                Text("Warranty")
+                                    .font(
+                                        .system(
+                                            size: 17,
+                                            weight: .bold
+                                        )
+                                    )
+                                    .foregroundColor(
+                                        showingWarranty
+                                        ? .white
+                                        : blueColor
+                                    )
+                                    .frame(
+                                        maxWidth: .infinity
+                                    )
+                                    .frame(height: 40)
+                                    .background(
+                                        Capsule()
+                                            .fill(
+                                                showingWarranty
+                                                ? blueColor
+                                                : Color.clear
+                                            )
+                                    )
                             }
                         }
+                        .padding(4)
+                        .frame(height: 50)
+                        .background(
+                            Capsule()
+                                .fill(Color.white)
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(
+                                    Color.gray.opacity(0.55),
+                                    lineWidth: 1
+                                )
+                        )
                         .padding(.horizontal, 20)
                         .padding(.top, 22)
-                        .padding(.bottom, 120)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                        
+                        
+                        // MARK: Section Title
+                        
+                        Text(
+                            showingWarranty
+                            ? "Active Warranties"
+                            : "Maintenance Log"
+                        )
+                        .font(
+                            .system(
+                                size: 20,
+                                weight: .bold
+                            )
+                        )
+                        .foregroundColor(blueColor)
+                        .padding(.horizontal, 20)
+                        .padding(.top, 4)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                        
+                        
+                        // MARK: Content Cards
+                        
+                        if showingWarranty {
+                            
+                            warrantyContent
+                            
+                        } else {
+                            
+                            maintenanceContent
+                        }
+                        
+                        Color.clear
+                            .frame(height: 120)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
                     }
+                    .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
                 }
             }
             
@@ -283,10 +313,32 @@ struct CarePage: View {
                     vehicle: item.vehicle,
                     date: item.date,
                     price: item.price,
+                    blueColor: blueColor,
                     orangeColor: orangeColor
                 )
             }
             .buttonStyle(.plain)
+            .listRowInsets(
+                EdgeInsets(
+                    top: 0,
+                    leading: 34,
+                    bottom: 8,
+                    trailing: 34
+                )
+            )
+            .listRowSeparator(.hidden)
+            .listRowBackground(cardRowBackground)
+            .swipeActions(edge: .trailing) {
+                
+                Button(role: .destructive) {
+                    
+                    deleteMaintenanceItem(item)
+                    
+                } label: {
+                    
+                    Label("Delete", systemImage: "trash")
+                }
+            }
         }
     }
     
@@ -296,82 +348,69 @@ struct CarePage: View {
     @ViewBuilder
     private var warrantyContent: some View {
         
-        // MARK: Warranty 1
-        
-        NavigationLink {
+        ForEach(warrantyItems) { item in
             
-            MaintenanceDetailView(
-                icon: "shield.fill",
-                title: "Engine Oil",
-                vehicle: "Myvi VVA 1234",
-                date: "24 Aug 2026",
-                price: "RM190.00",
-                type: "Warranty"
+            NavigationLink {
+                
+                MaintenanceDetailView(
+                    icon: "shield.fill",
+                    title: item.title,
+                    vehicle: item.vehicle,
+                    date: item.date,
+                    price: item.price,
+                    type: "Warranty"
+                )
+                
+            } label: {
+                
+                WarrantyCard(
+                    title: item.title,
+                    vehicle: item.vehicle,
+                    validUntil: item.validUntil,
+                    daysLeft: item.daysLeft,
+                    blueColor: blueColor,
+                    orangeColor: orangeColor
+                )
+            }
+            .buttonStyle(.plain)
+            .listRowInsets(
+                EdgeInsets(
+                    top: 0,
+                    leading: 34,
+                    bottom: 8,
+                    trailing: 34
+                )
             )
-            
-        } label: {
-            
-            WarrantyCard(
-                title: "Engine Oil",
-                vehicle: "Myvi VVA 1234",
-                validUntil: "Valid until 24 Aug 2026",
-                daysLeft: "22 days left",
-                blueColor: blueColor
-            )
+            .listRowSeparator(.hidden)
+            .listRowBackground(cardRowBackground)
+            .swipeActions(edge: .trailing) {
+                
+                Button(role: .destructive) {
+                    
+                    deleteWarrantyItem(item)
+                    
+                } label: {
+                    
+                    Label("Delete", systemImage: "trash")
+                }
+            }
         }
-        .buttonStyle(.plain)
+    }
+    
+    
+    private var cardRowBackground: some View {
         
-        
-        // MARK: Warranty 2
-        
-        NavigationLink {
-            
-            MaintenanceDetailView(
-                icon: "shield.fill",
-                title: "Brake Pad (Front)",
-                vehicle: "Honda City VAB 5678",
-                date: "10 Sept 2026",
-                price: "RM350.00",
-                type: "Warranty"
+        RoundedRectangle(cornerRadius: 18)
+            .fill(Color.white)
+            .overlay(
+                RoundedRectangle(cornerRadius: 18)
+                    .stroke(
+                        Color.gray.opacity(0.65),
+                        lineWidth: 1
+                    )
             )
-            
-        } label: {
-            
-            WarrantyCard(
-                title: "Brake Pad (Front)",
-                vehicle: "Honda City VAB 5678",
-                validUntil: "Valid until 10 Sept 2026",
-                daysLeft: "40 days left",
-                blueColor: blueColor
-            )
-        }
-        .buttonStyle(.plain)
-        
-        
-        // MARK: Warranty 3
-        
-        NavigationLink {
-            
-            MaintenanceDetailView(
-                icon: "shield.fill",
-                title: "Aircond Service",
-                vehicle: "Proton X70 VGN 9012",
-                date: "15 Sept 2026",
-                price: "RM250.00",
-                type: "Warranty"
-            )
-            
-        } label: {
-            
-            WarrantyCard(
-                title: "Aircond Service",
-                vehicle: "Proton X70 VGN 9012",
-                validUntil: "Valid until 15 Sept 2026",
-                daysLeft: "45 days left",
-                blueColor: blueColor
-            )
-        }
-        .buttonStyle(.plain)
+            .padding(.horizontal, 20)
+            .padding(.bottom, 8)
     }
     
     
@@ -391,7 +430,7 @@ struct CarePage: View {
                 MaintenanceItem(
                     icon: "drop.fill",
                     title: "Engine Oil",
-                    vehicle: "Myvi VVA 1234",
+                    vehicle: VehicleStorage.vehicleName(at: 1),
                     date: Calendar.current.date(
                         byAdding: .day,
                         value: -15,
@@ -403,7 +442,7 @@ struct CarePage: View {
                 MaintenanceItem(
                     icon: "lock.fill",
                     title: "Brake Pad Placement",
-                    vehicle: "Myvi VVA 1234",
+                    vehicle: VehicleStorage.vehicleName(at: 1),
                     date: Calendar.current.date(
                         byAdding: .month,
                         value: -2,
@@ -415,7 +454,7 @@ struct CarePage: View {
                 MaintenanceItem(
                     icon: "snowflake",
                     title: "Aircond Service",
-                    vehicle: "Myvi VVA 1234",
+                    vehicle: VehicleStorage.vehicleName(at: 1),
                     date: Calendar.current.date(
                         byAdding: .day,
                         value: -30,
@@ -493,6 +532,34 @@ struct CarePage: View {
     }
     
     
+    // MARK: - Delete Maintenance
+    
+    private func deleteMaintenanceItem(
+        _ item: MaintenanceItem
+    ) {
+        
+        maintenanceItems.removeAll {
+            $0.id == item.id
+        }
+        
+        MaintenanceStorage.save(
+            maintenanceItems
+        )
+    }
+    
+    
+    // MARK: - Delete Warranty
+    
+    private func deleteWarrantyItem(
+        _ item: WarrantyItem
+    ) {
+        
+        warrantyItems.removeAll {
+            $0.id == item.id
+        }
+    }
+    
+    
     // MARK: - Date Formatter
     
     private func formattedDate(
@@ -524,6 +591,26 @@ struct MaintenanceItem: Identifiable, Codable {
     var date: Date
     
     var price: String
+}
+
+
+// MARK: - Warranty Item
+
+struct WarrantyItem: Identifiable {
+    
+    let id: UUID = UUID()
+    
+    let title: String
+    
+    let vehicle: String
+    
+    let validUntil: String
+    
+    let date: String
+    
+    let daysLeft: String
+    
+    let price: String
 }
 
 
@@ -597,7 +684,9 @@ struct MaintenanceCard: View {
     let vehicle: String
     let date: Date
     let price: String
+    let blueColor: Color
     let orangeColor: Color
+    
     
     
     var body: some View {
@@ -610,17 +699,17 @@ struct MaintenanceCard: View {
                 
                 Circle()
                     .fill(
-                        Color.orange.opacity(0.15)
+                        Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15)
                     )
                     .frame(
                         width: 54,
-                        height: 54
+                        height: 45
                     )
                 
                 Image(systemName: icon)
                     .font(
                         .system(
-                            size: 25,
+                            size: 20,
                             weight: .medium
                         )
                     )
@@ -640,168 +729,36 @@ struct MaintenanceCard: View {
                 Text(title)
                     .font(
                         .system(
-                            size: 17,
+                            size: 15,
                             weight: .bold
                         )
                     )
                     .foregroundColor(
-                        orangeColor
+                        blueColor
                     )
                 
                 Text(vehicle)
                     .font(
-                        .system(size: 16)
+                        .system(size: 13)
                     )
                     .foregroundColor(
-                        orangeColor
+                        blueColor
                     )
                 
                 Text(price)
                     .font(
-                        .system(size: 16)
+                        .system(size: 11)
                     )
                     .foregroundColor(
-                        orangeColor
+                        blueColor
                     )
             }
             
             
             Spacer()
-            
-            
-            // MARK: Maintenance Age
-            
-            Text(
-                maintenanceAge(
-                    from: date
-                )
-            )
-            .font(
-                .system(
-                    size: 13,
-                    weight: .medium
-                )
-            )
-            .foregroundColor(.red)
-            .multilineTextAlignment(.trailing)
-            .frame(
-                maxWidth: 70,
-                alignment: .trailing
-            )
         }
         .padding(.horizontal, 14)
-        .frame(height: 118)
-        .background(Color.white)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: 18
-            )
-        )
-        .overlay(
-            RoundedRectangle(
-                cornerRadius: 18
-            )
-            .stroke(
-                Color.gray.opacity(0.65),
-                lineWidth: 1
-            )
-        )
-    }
-    
-    
-    // MARK: Maintenance Age
-    
-    private func maintenanceAge(
-        from date: Date
-    ) -> String {
-        
-        let calendar = Calendar.current
-        
-        let startDate =
-            calendar.startOfDay(for: date)
-        
-        let today =
-            calendar.startOfDay(for: Date())
-        
-        
-        // MARK: Today
-        
-        if calendar.isDateInToday(date) {
-            return "Today"
-        }
-        
-        
-        // MARK: Future
-        
-        if startDate > today {
-            
-            let days =
-                calendar.dateComponents(
-                    [.day],
-                    from: today,
-                    to: startDate
-                ).day ?? 0
-            
-            if days == 1 {
-                return "In 1 day"
-            }
-            
-            return "In \(days) days"
-        }
-        
-        
-        // MARK: Years
-        
-        let years =
-            calendar.dateComponents(
-                [.year],
-                from: startDate,
-                to: today
-            ).year ?? 0
-        
-        if years > 0 {
-            
-            if years == 1 {
-                return "1 year ago"
-            }
-            
-            return "\(years) years ago"
-        }
-        
-        
-        // MARK: Months
-        
-        let months =
-            calendar.dateComponents(
-                [.month],
-                from: startDate,
-                to: today
-            ).month ?? 0
-        
-        if months > 0 {
-            
-            if months == 1 {
-                return "1 month ago"
-            }
-            
-            return "\(months) months ago"
-        }
-        
-        
-        // MARK: Days
-        
-        let days =
-            calendar.dateComponents(
-                [.day],
-                from: startDate,
-                to: today
-            ).day ?? 0
-        
-        if days == 1 {
-            return "1 day ago"
-        }
-        
-        return "\(days) days ago"
+        .frame(height: 70)
     }
 }
 
@@ -815,7 +772,7 @@ struct WarrantyCard: View {
     let validUntil: String
     let daysLeft: String
     let blueColor: Color
-    
+    let orangeColor: Color
     
     var body: some View {
         
@@ -827,14 +784,10 @@ struct WarrantyCard: View {
                 
                 Circle()
                     .fill(
-                        Color(
-                            red: 0.90,
-                            green: 0.94,
-                            blue: 0.98
-                        )
+                        Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15)
                     )
                     .frame(
-                        width: 54,
+                        width: 45,
                         height: 54
                     )
                 
@@ -845,12 +798,12 @@ struct WarrantyCard: View {
                 )
                 .font(
                     .system(
-                        size: 27,
+                        size: 20,
                         weight: .medium
                     )
                 )
                 .foregroundColor(
-                    blueColor
+                    orangeColor
                 )
             }
             
@@ -865,7 +818,7 @@ struct WarrantyCard: View {
                 Text(title)
                     .font(
                         .system(
-                            size: 17,
+                            size: 13,
                             weight: .bold
                         )
                     )
@@ -875,7 +828,7 @@ struct WarrantyCard: View {
                 
                 Text(vehicle)
                     .font(
-                        .system(size: 16)
+                        .system(size: 13)
                     )
                     .foregroundColor(
                         blueColor
@@ -883,7 +836,7 @@ struct WarrantyCard: View {
                 
                 Text(validUntil)
                     .font(
-                        .system(size: 16)
+                        .system(size: 13)
                     )
                     .foregroundColor(
                         blueColor
@@ -911,22 +864,7 @@ struct WarrantyCard: View {
                 )
         }
         .padding(.horizontal, 14)
-        .frame(height: 118)
-        .background(Color.white)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: 18
-            )
-        )
-        .overlay(
-            RoundedRectangle(
-                cornerRadius: 18
-            )
-            .stroke(
-                Color.gray.opacity(0.65),
-                lineWidth: 1
-            )
-        )
+        .frame(height: 70)
     }
 }
 

@@ -50,7 +50,8 @@ struct ProfilePage: View {
     
     var body: some View {
         
-        ZStack {
+        NavigationStack {
+            ZStack {
             
             // MARK: - Background
             
@@ -61,6 +62,9 @@ struct ProfilePage: View {
             VStack(spacing: 0) {
                 
                 // MARK: - Top Bar
+                
+                Color.white
+                    .frame(height: 1)
                 
                 HStack {
                     
@@ -83,8 +87,9 @@ struct ProfilePage: View {
                         .foregroundColor(.clear)
                 }
                 .padding(.horizontal, 20)
-                .frame(height: 56)
-                .background(Color.orange)
+                .frame(height: 65)
+                .background(Color(red: 1.0, green: 0.67, blue: 0.0))
+                // Color(red: 1.0, green: 0.67, blue: 0.0)
                 
                 
                 // MARK: - Main Content
@@ -137,7 +142,7 @@ struct ProfilePage: View {
                                             height: 120
                                         )
                                         .foregroundColor(
-                                            ProfileColors.darkBlue
+                                            ProfileColors.orange
                                         )
                                     }
                                     
@@ -338,7 +343,7 @@ struct ProfilePage: View {
                             
                             NavigationLink {
                                 
-                                // MyVehiclesPage()
+                                GaragePage()
                                 
                             } label: {
                                 
@@ -535,6 +540,7 @@ struct ProfilePage: View {
             Text(
                 "Are you sure you want to log out?"
             )
+            }
         }
     }
     
@@ -1005,7 +1011,7 @@ struct ProfileInformationRow: View {
             
             Circle()
                 .fill(
-                    ProfileColors.darkBlue.opacity(0.10)
+                    Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15)
                 )
                 .frame(
                     width: 44,
@@ -1015,7 +1021,7 @@ struct ProfileInformationRow: View {
                     Image(systemName: icon)
                         .font(.system(size: 18))
                         .foregroundColor(
-                            ProfileColors.darkBlue
+                            Color(red: 242/255, green: 177/255, blue: 61/255)
                         )
                 )
             
@@ -1085,7 +1091,7 @@ struct ProfileActionRow: View {
             
             Circle()
                 .fill(
-                    ProfileColors.darkBlue.opacity(0.10)
+                    Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15)
                 )
                 .frame(
                     width: 48,
@@ -1095,7 +1101,7 @@ struct ProfileActionRow: View {
                     Image(systemName: icon)
                         .font(.system(size: 19))
                         .foregroundColor(
-                            ProfileColors.darkBlue
+                            Color(red: 242/255, green: 177/255, blue: 61/255)
                         )
                 )
             
@@ -1202,6 +1208,12 @@ struct ProfileColors {
         red: 0.05,
         green: 0.30,
         blue: 0.50
+    )
+    
+    static let orange = Color(
+        red: 1.0,
+        green: 0.67,
+        blue: 0.0
     )
 }
 

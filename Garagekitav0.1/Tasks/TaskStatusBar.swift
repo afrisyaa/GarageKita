@@ -6,71 +6,38 @@
 //
 
 import SwiftUI
-import UIKit
-
-
-
-
-struct TaskStatusBar: View {
+    struct TaskStatusBar: View {
     
     //anak dia dari pendingtaskview
     @Binding var selectedStatus: String
-    
-    
-    
-    //tukar color status bar
-    init(selectedStatus: Binding<String>) {
-        self._selectedStatus = selectedStatus
-        
-            //warna bg bila selected
-           UISegmentedControl.appearance().selectedSegmentTintColor = .systemBlue
-        
-        //tulisan bila selected putih
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected )
-       
-       
-        //tak selected hitam
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal )
-        
-        }
-
-    
-    
-    
-   
+    private let taskStatuses = ["Pending", "InProgress", "Completed", "Overdue"]
+    private let themeBlue = Color(red: 0.02, green: 0.32, blue: 0.56)
     
     var body: some View {
-        
-        
-        
-        //status bar
-        Picker("Task Status", selection: $selectedStatus){
-            
-                        Text("Pending")
-                            .tag("Pending")
-            
-                        Text("InProgress")
-                            .tag("InProgress")
-
-                        Text("Completed")
-                            .tag("Completed")
-
-                        Text("Overdue")
-                            .tag("Overdue")
-            
-        
+        HStack(spacing: 0) {
+            ForEach(taskStatuses, id: \.self) { status in
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        selectedStatus = status
+                    }
+                }) {
+                    Text(status)
+                        .font(.caption2)
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(selectedStatus == status ? themeBlue : Color.clear)
+                        .foregroundStyle(selectedStatus == status ? .white : themeBlue)
+                        .cornerRadius(20)
+                }
+            }
         }
-       
-        .pickerStyle(.segmented)
-        .tint(.blue)
-        .frame(maxWidth: .infinity)
-        .frame(height: 32)
-        .padding(.horizontal, 1)
-        .padding(.vertical, 8) //jarak task
-        //.background(Color.white)
-        .frame(height: 50)
-        //.scaleEffect(x:1.0, y:1.2) //ubah saiz
-        .padding()
+        .padding(4)
+        .background(Color.white)
+        .cornerRadius(25)
+        .overlay(RoundedRectangle(cornerRadius: 25).stroke(Color.gray.opacity(0.3), lineWidth: 1))
+        .padding(.horizontal)
+        .padding(.vertical, 12)
         
         
        

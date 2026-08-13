@@ -57,36 +57,37 @@ struct TaskChecklistView: View {
             
               //leading rapat ke tepi
             //vstack kirikanan
-            HStack (spacing: 5){
+            HStack (spacing: 24){
                 //icon tepi
                 Image(systemName: iconName)
                     .font(.headline)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color(red: 242/255, green: 177/255, blue: 61/255))
                     .frame(width: 44, height: 44)
-                    .background(Color.orange)
+                    .background(Color(red: 242/255, green: 177/255, blue: 61/255).opacity(0.15))
                     .clipShape(Circle())
               
                 
                 
                 
                 //title
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 6) {
                     Text(serviceType)
+                        .bold()
                         .font(.subheadline)
+                        .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                     
                     Text(vehicleName)
                         .font(.caption2)
-                    
-                    Text("DUE")
-                        .font(.caption2)
+                        .bold()
+                        .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                     
                     Text(dueDate)
                         .font(.caption2)
+                        .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                     
                     Text(mileage)
                         .font(.caption2)
-                    
-                    
+                        .foregroundStyle(Color(red: 0.02, green: 0.32, blue: 0.56))
                 }
             }
             
@@ -95,7 +96,8 @@ struct TaskChecklistView: View {
             
             Text("\(daysLeft)days Left")
                         .font(.caption)
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(.red)
+                        .bold()
             
             
         }
