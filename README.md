@@ -24,9 +24,4 @@ An iOS app built with SwiftUI during an Apple app development workshop (August 2
 
 ## Team
 
-Built as a group project during the workshop by:
-
-- Nur'alya Farisya
-- Shahid
-- Irfan
-- Ariena
+Built as a group project by Nur'alya Farisya, Shahid, Irfan and Ariena during the workshop.
