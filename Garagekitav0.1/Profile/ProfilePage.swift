@@ -10,6 +10,8 @@ import PhotosUI
 
 struct ProfilePage: View {
     
+    var onShowGarage: () -> Void = {}
+    
     // MARK: - Profile Information
     
     @State private var fullName = "Irfan Khasim"
@@ -341,9 +343,9 @@ struct ProfilePage: View {
                             
                             Divider()
                             
-                            NavigationLink {
+                            Button {
                                 
-                                GaragePage()
+                                onShowGarage()
                                 
                             } label: {
                                 

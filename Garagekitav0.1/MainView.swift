@@ -41,7 +41,9 @@ struct MainView: View {
                 EmergencyContactView()
                 
             case .profile:
-                ProfilePage()
+                ProfilePage {
+                    selectedTab = .garage
+                }
             }
         }
     }
